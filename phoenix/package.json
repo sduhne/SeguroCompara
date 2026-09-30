@@ -1,0 +1,33 @@
+{
+  "name": "phoenix",
+  "version": "0.1.0",
+  "description": "Phoenix: remote job search pipeline (discover, score, tailor, apply, track)",
+  "main": "src/cli.ts",
+  "scripts": {
+    "test": "vitest run",
+    "phoenix": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "discover": "tsx src/cli.ts discover",
+    "daily": "tsx src/cli.ts discover && tsx src/cli.ts score --llm && tsx src/cli.ts tailor -n 15 && tsx src/cli.ts apply -n 15 && tsx src/cli.ts report"
+  },
+  "license": "UNLICENSED",
+  "private": "true",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.129.0",
+    "commander": "^15.0.0",
+    "fast-xml-parser": "^5.11.2",
+    "playwright": "^1.63.0",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  },
+  "bin": {
+    "phoenix": "./src/cli.ts"
+  }
+}

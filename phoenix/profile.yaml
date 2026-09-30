@@ -1,0 +1,354 @@
+# Phoenix profile for Santiago Duhne Ayala.
+# Public facts only (what is already on LinkedIn). Contact details, phone and the CV file live in
+# private/contact.yaml, which is git-ignored because this repository is public.
+# Lines marked SET ME are placeholders to confirm before the first confirmed application run.
+
+candidate:
+  name: Santiago Duhne Ayala
+  headline: Director, AI & Business Consulting | Fractional CFO | Ex-Portfolio Manager (10 yrs, family offices) | Computer Science Engineer
+  location: Mexico City, Mexico
+  country: Mexico
+  timezone: America/Mexico_City (CST, UTC-6)
+  languages: [Spanish (native), English (fluent), German (A1.2 certificate), Italian (basic)]
+  summary: >-
+    Director of AI and business consulting at Menlo Capital, with ten years managing money for
+    Mexican multi-family offices (portfolio manager at Goleta Fund, US $50M AUM; launched and ran
+    Kiefer Fund) and a computer-science background (nine years building financial ERP back-ends in
+    Python, C#, C++ and Java; wrote the Python algorithms that traded options on US indices).
+    Combines a finance operator's discipline with hands-on AI delivery: where AI pays, the business
+    case, and pilots to production.
+  experience:
+    - company: Menlo Capital
+      title: Director, AI & Business Consulting
+      period: 2024 – Present   # SET ME: confirm start date
+      summary: Investment and advisory firm with an AI and business consulting practice.
+      bullets:
+        - "Lead the AI and business consulting practice: scope engagements, build the business case for each AI investment, and run delivery from pilot to production alongside the client's operating team."
+        - "Advise executives on where AI changes unit economics: use-case selection, build-versus-buy decisions, vendor evaluation, data readiness and governance."
+        - "Bring the finance lens to every engagement: financial models, ROI tracking and board-level reporting on AI programs."
+    - company: Goleta Fund
+      title: Portfolio Manager, Family Office Manager
+      period: 2023 – 2024
+      summary: Mexican multi-family office focused on alternative investments, US $50M AUM.
+      bullets:
+        - Ran two low-volatility strategies across public asset classes, from equities to futures, returning 7% and 9% annualized with Sharpe ratios above 1.10.
+        - Institutionalized the office's four legal, contractual and trust structures into one lean, scalable operating system, opening access to higher-quality private strategies.
+    - company: Kiefer Fund
+      title: Portfolio Manager (launched the fund)
+      period: 2020 – 2023
+      summary: Mexican multi-family office focused on derivatives-hedged strategies; wound down in 2023 after not reaching target AUM.
+      bullets:
+        - Launched the fund and designed and managed its fiscal and legal partnership structure and compliance framework.
+        - Programmed three Python algorithms that mechanically traded options on the main US equity indices; ran a book spanning equities to structured notes with rules-based, quantitative strategies.
+        - Managed relationships with institutional investors, banks and brokers; co-led fundraising beyond the founding investors.
+    - company: Goleta Fund
+      title: Portfolio Manager
+      period: 2017 – 2020
+      bullets:
+        - Managed two sub-funds across equities and alternative investments with a volatility-minimizing mandate, returning 11% and 13% annualized with Sharpe ratios above 1.0.
+        - Led the creation of three US-based trust structures; administered the office's trust and legal structures and advised on fiscal and legal structuring.
+    - company: Escala Partners
+      title: Associate
+      period: 2015 – 2017
+      summary: Mexican multi-family office focused on private investments, US $100M AUM across 10+ companies.
+      bullets:
+        - Led structuring, financial modelling and fundraising for five Mexican oil-and-gas projects with deals of MXN 100M to 500M; managed relationships with key players in the Mexican energy sector.
+        - Structured eight private investments in mid-market companies, from a Tier-1 automotive OEM supplier to a food and agriculture manufacturer.
+        - Provided business and strategy consulting to the office's portfolio companies.
+    - company: Grupo Bursátil Mexicano (GBM)
+      title: Senior Financial Advisor
+      period: 2014 – 2015
+      bullets:
+        - Portfolio construction and asset management for private clients at a Mexican investment bank and asset manager.
+    - company: Kepler ERP
+      title: Back-End Software Developer
+      period: 2011 – 2020
+      bullets:
+        - Engineered back-end components in Python, C++, C# and Java for a mid-market financial ERP, improving performance and scalability of accounting and business operations.
+  education:
+    - Columbia Business School — Executive Education, Advanced Value Investing (2019)
+    - Universidad Panamericana — Postgraduate, Engineering Project Management (2015–2016, GPA 96/100)
+    - Hochschule Bremen — International Business and Finance (2013–2014, GPA 91/100)
+    - Universidad Panamericana — Computer Science Engineering (2010–2014, GPA 84/100, class representative)
+  skills:
+    - AI strategy and adoption (use-case selection, ROI cases, build-versus-buy, vendor evaluation, pilots to production)
+    - Generative AI and LLM applications for finance and operations
+    - Financial modelling, valuation, FP&A, board reporting
+    - Portfolio and asset management (equities, futures, options, structured notes), quantitative and rules-based strategies
+    - Fund and family-office structuring (trusts, partnerships, compliance)
+    - Deal structuring, fundraising, due diligence, private investments
+    - Business and strategy consulting, operating model design
+    - Python, C#, C++, Java; Bloomberg; CFI Financial Modeling
+  work_authorization: >-
+    Mexican citizen based in Mexico City. Works for US and European companies as an independent
+    contractor or through an employer of record (Deel, Remote, Oyster). A role that requires
+    residence in the US or EU would need visa sponsorship.
+  availability: Available to start within two weeks. Open to full-time, part-time and advisory engagements.
+  engagement_types: [full-time employee, part-time, contractor, fractional executive, advisor]
+  compensation:
+    full_time_usd_year_min: 120000   # SET ME
+    part_time_usd_hour_min: 120      # SET ME
+    consulting_usd_day_min: 900      # SET ME
+
+search:
+  # Free-text searches sent to sources that support them (Remotive, Jobicy).
+  queries:
+    - AI strategy
+    - AI consultant
+    - head of AI
+    - AI director
+    - AI transformation
+    - fractional CFO
+    - finance director
+    - VP finance
+    - FP&A
+    - financial modeling
+    - business consultant
+    - strategy consultant
+    - management consultant
+    - portfolio manager
+    - investment analyst
+    - family office
+    - quantitative
+    - fintech
+  # Title patterns (case-insensitive regular expressions) and the points the best match earns (max 35).
+  titles:
+    - pattern: '\b(head|director|vp|vice president|chief)\b.*\b(ai|artificial intelligence|data|analytics|innovation|digital|transformation)\b'
+      weight: 35
+    - pattern: '\b(ai|artificial intelligence|gen ?ai|llm)\b.*\b(head|director|vp|lead|leader|manager|strategist|strategy|consultant|advisor|architect|program|transformation|adoption|enablement|specialist)\b'
+      weight: 35
+    - pattern: '\bfractional\b.*\b(cfo|finance|coo|chief|executive)\b|\b(interim|part[- ]time)\b.*\b(cfo|finance director|finance lead|head of finance)\b'
+      weight: 35
+    - pattern: '\b(cfo|chief financial officer|finance director|director of finance|vp,? finance|vice president,? finance|head of finance|head of fp&a|fp&a (lead|manager|director)|finance lead)\b'
+      weight: 30
+    - pattern: '\b(management|business|strategy|strategic|transformation|operations|growth|finance|financial) consultant\b|\bconsult(ing|ant)\b.*\b(director|principal|senior|lead|manager|partner)\b|\b(engagement|principal|senior) (manager|consultant)\b'
+      weight: 30
+    - pattern: '\b(portfolio manager|investment (director|manager|analyst|associate|officer)|asset manager|fund manager|family office|wealth (manager|advisor)|quant(itative)? (analyst|researcher|trader|strategist|developer))\b'
+      weight: 25
+    - pattern: '\b(solutions|forward[- ]deployed|customer|applied|implementation) (engineer|consultant|architect|lead|manager)\b.*\b(ai|ml|llm)\b|\b(ai|ml|llm)\b.*\b(solutions|forward[- ]deployed|implementation) (engineer|consultant|architect|manager)\b'
+      weight: 22
+    - pattern: '\b(financial (model(l)?er|analyst|modell?ing)|corporate development|corp dev|m&a|investor relations|due diligence|treasury)\b'
+      weight: 20
+    - pattern: '\b(product|program|project|delivery) (manager|director|lead|owner)\b.*\b(ai|ml|fintech|finance|data|analytics)\b'
+      weight: 18
+    - pattern: '\b(advisor|adviser|advisory|expert network|subject matter expert|sme)\b'
+      weight: 15
+    - pattern: '\b(chief of staff|founder.?s associate|entrepreneur in residence|general manager|country manager|managing director)\b'
+      weight: 15
+    - pattern: '\b(data|analytics|bi|automation) (director|lead|manager|strategist|consultant)\b'
+      weight: 12
+    - pattern: '\b(fintech|finance|banking|payments|investment|wealth)\b'
+      weight: 8
+  negative_titles:
+    - software engineer
+    - frontend
+    - front-end
+    - front end
+    - backend
+    - back-end
+    - full stack
+    - full-stack
+    - devops
+    - site reliability
+    - mobile developer
+    - ios developer
+    - android developer
+    - qa engineer
+    - quality assurance
+    - test engineer
+    - nurse
+    - physician
+    - sales development
+    - account executive
+    - customer support
+    - customer success
+    - customer service
+    - recruiter
+    - talent acquisition
+    - designer
+    - ux
+    - copywriter
+    - content writer
+    - social media
+    - community manager
+    - teacher
+    - tutor
+    - bookkeeper
+    - payroll
+    - accounts payable
+    - accounts receivable
+    - staff accountant
+    - tax preparer
+    - virtual assistant
+    - data entry
+    - call center
+    - executive assistant
+  junior_words: [junior, jr., intern, internship, entry level, entry-level, graduate, trainee, apprentice, student, working student]
+  senior_words: [director, head, vp, vice president, chief, principal, lead, senior, sr., manager, partner, fractional, interim, consultant, advisor, executive, staff]
+  keywords_strong:
+    - ai strategy
+    - generative ai
+    - genai
+    - llm
+    - large language model
+    - machine learning
+    - ai adoption
+    - ai transformation
+    - business case
+    - roi
+    - financial model
+    - financial modeling
+    - financial modelling
+    - fp&a
+    - fractional cfo
+    - portfolio management
+    - asset management
+    - family office
+    - alternative investments
+    - derivatives
+    - options
+    - quantitative
+    - fundraising
+    - due diligence
+    - deal structuring
+    - private equity
+    - venture
+    - board reporting
+    - python
+    - consulting
+    - advisory
+    - strategy
+    - operating model
+    - spanish
+    - latam
+    - latin america
+    - mexico
+    - bilingual
+  keywords:
+    - startup
+    - scale-up
+    - fintech
+    - investment
+    - valuation
+    - kpi
+    - dashboard
+    - automation
+    - analytics
+    - sql
+    - excel
+    - mba
+    - executive
+    - c-level
+    - stakeholder
+    - cross-functional
+    - remote-first
+    - async
+    - contractor
+    - b2b
+    - saas
+    - erp
+    - treasury
+    - budgeting
+    - forecasting
+    - m&a
+    - investor relations
+    - risk management
+    - wealth
+  # Each hit costs points; these usually mean the role is not open to a contractor in Mexico.
+  negative_keywords:
+    - must be located in the us
+    - must be based in the us
+    - us citizens only
+    - us citizenship
+    - security clearance
+    - must reside in
+    - fluent german
+    - native german
+    - german speaking
+    - german-speaking
+    - deutschkenntnisse
+    - fließend
+    - fluent french
+    - native french
+    - fluent dutch
+    - on-site
+    - onsite
+    - in-office
+    - in office
+    - hybrid
+    - relocat
+  currencies_preferred: [USD, EUR]
+  currencies_ok: [GBP, CHF, CAD]
+  regions_good: [worldwide, anywhere, global, americas, latam, latin america, north america, mexico, united states, usa, canada, europe, emea, united kingdom, germany, spain, netherlands, switzerland, ireland, cst, central time, est, eastern time, utc-6, utc-5, gmt-6, gmt-5, remote]
+  regions_bad: [us only, usa only, united states only, us-based only, us based only, eu only, europe only, uk only, india, philippines, pakistan, bangladesh, australia only, apac, asia, africa]
+  min_score: 55        # shortlist threshold
+  store_floor: 25      # below this a discovered job is not even stored
+  max_age_days: 45
+  min_annual_usd: 60000
+  blocked_companies: []
+
+# Sources to run. Set one to false to skip it.
+sources:
+  remotive: true
+  remoteok: true
+  jobicy: true
+  himalayas: true
+  arbeitnow: true
+  weworkremotely: true
+  workingnomads: true
+  hn: true
+  greenhouse: true
+  lever: true
+  ashby: true
+
+# Company boards on the three ATSs with public, form-based application pages. Unknown tokens are
+# skipped with a log line, so add freely. Seed list: AI labs, fintechs and remote-first companies.
+boards:
+  greenhouse: [anthropic, scaleai, databricks, stripe, figma, gitlab, cloudflare, coinbase, brex, mercury, deel, doordash, airbnb, dropbox, twilio, hubspot, okta, elastic, mongodb, datadog, affirm, plaid, chime, robinhood, nubank, remotecom, toptal, andela, carta, gusto, wise]
+  lever: [palantir, mistral, netlify, wealthsimple, kraken, shopify, spotify, zapier, atlassian, superhuman, lattice]
+  ashby: [openai, notion, ramp, linear, replit, perplexity, cohere, elevenlabs, supabase, vercel, hex, sierra, harvey, glean, writer, together, runway, character, anyscale, modal]
+  wwr_feeds:
+    - https://weworkremotely.com/remote-jobs.rss
+    - https://weworkremotely.com/categories/remote-management-and-finance-jobs.rss
+    - https://weworkremotely.com/categories/remote-business-and-management-jobs.rss
+
+apply:
+  daily_cap: 25
+  per_company_cooldown_days: 60
+  headed: false
+  # Standard answers pasted into application forms. SET ME on every line before a confirmed run.
+  answers:
+    how_did_you_hear: Job board
+    salary_expectation: USD 120,000 to 170,000 base for a full-time director role; USD 120 to 160 per hour for part-time and advisory work; flexible for the right scope.   # SET ME
+    work_authorization: I am a Mexican citizen based in Mexico City and work for US and European companies as an independent contractor or through an employer of record. A role requiring residence in the US or EU would need sponsorship.
+    work_authorization_yes_no: "No"          # answer to "authorized to work in <US/EU/UK>?" (Mexico: Yes)
+    require_sponsorship: Not for remote or contractor arrangements. Yes if the role requires relocating to the US or EU.
+    require_sponsorship_yes_no: "Yes"        # answer to "will you require sponsorship?" (conservative, honest reading)
+    notice_period: Available to start within two weeks.
+    remote_preference: Remote
+    years_experience: "10+"
+    pronouns: ""
+
+# Screening questions Phoenix answers from here before asking Claude. Add the ones you see often.
+qa_bank:
+  - q: Why are you interested in this role?
+    a: "The role sits where my two careers meet: ten years running money and structures for family offices, and hands-on AI delivery at Menlo Capital. I want work where a finance operator who can read the code decides what AI is worth building."
+  - q: Describe your experience with AI or machine learning.
+    a: At Menlo Capital I lead the AI and business consulting practice, from use-case selection and ROI cases to getting pilots into production. Before that I programmed the Python options-trading algorithms for Kiefer Fund and spent nine years building financial ERP back-ends in Python, C#, C++ and Java.
+  - q: How many years of experience do you have in finance?
+    a: Ten years in investment management and finance, including portfolio management at Goleta Fund (US $50M AUM), launching Kiefer Fund, and deal structuring at Escala Partners.
+  - q: Have you managed a P&L or budget?
+    a: Yes. As portfolio manager I ran two sub-funds and later two low-volatility strategies at Goleta Fund, and I launched and ran Kiefer Fund end to end, including its legal, fiscal and compliance framework.
+  - q: Are you comfortable working as a contractor?
+    a: Yes. I work with US and European companies as an independent contractor or through an employer of record such as Deel or Remote.
+  - q: What time zone are you in and what overlap can you offer?
+    a: Mexico City, Central Time (UTC-6). Full overlap with US business hours and four to six hours with European mornings and afternoons.
+  - q: What is your English proficiency?
+    a: Fluent. I studied international business in Germany in English, completed Columbia Business School executive education, and work daily with US counterparts. Spanish is my native language.
+  - q: Are you open to part-time or fractional work?
+    a: Yes. I am open to full-time, part-time and fractional or advisory engagements.
+
+llm:
+  model: claude-opus-5-5
+  effort: high
+  max_tokens: 8000

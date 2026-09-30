@@ -1,0 +1,9 @@
+node_modules/
+data/*
+!data/.gitkeep
+private/*
+!private/README.md
+!private/contact.example.yaml
+.env
+*.log
+*.tsbuildinfo
