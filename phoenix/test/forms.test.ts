@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bankAnswer, classifyField, pickOption, valueFor } from '../src/apply/forms.js';
+import { bankAnswer, classifyField, detectRegion, pickOption, valueFor } from '../src/apply/forms.js';
 import { loadConfig, packageRoot } from '../src/config.js';
 import type { Contact } from '../src/config.js';
 
@@ -39,7 +39,23 @@ describe('valueFor and pickOption', () => {
     expect(pickOption('authorization', ['Yes', 'No'], ctx, 'Are you authorized to work in the United States?')).toBe('No');
     expect(pickOption('authorization', ['Yes', 'No'], ctx, 'Are you authorized to work in Mexico?')).toBe('Yes');
     expect(pickOption('sponsorship', ['Yes', 'No'], ctx)).toBe('Yes');
+    expect(pickOption('authorization', ['Yes', 'No'], ctx, 'Are you eligible to work in Germany?')).toBe('Yes');
+    expect(pickOption('authorization', ['Yes', 'No'], ctx, 'Do you have the right to work in the EU?')).toBe('Yes');
+    expect(pickOption('authorization', ['Yes', 'No'], ctx, 'Are you authorised to work in the UK?')).toBe('No');
+    expect(pickOption('sponsorship', ['Yes', 'No'], ctx, 'Will you require visa sponsorship to work in the Netherlands?')).toBe('No');
+    expect(pickOption('sponsorship', ['Yes', 'No'], { ...ctx, region: 'eu' })).toBe('No');
+    expect(pickOption('authorization', ['Yes', 'No'], { ...ctx, region: 'us' }, 'Are you legally authorized to work in the country of this job?')).toBe('No');
     expect(pickOption('how_heard', ['Select...', 'Referral', 'Job board', 'Other'], ctx)).toBe('Job board');
+  });
+});
+
+describe('detectRegion', () => {
+  it('reads the hiring region from a location line', () => {
+    expect(detectRegion('Remote - EU')).toBe('eu');
+    expect(detectRegion('Berlin, Germany (remote)')).toBe('eu');
+    expect(detectRegion('Remote - US')).toBe('us');
+    expect(detectRegion('Remote - Worldwide')).toBe('other');
+    expect(detectRegion('Tell us where you are based')).toBe('other');
   });
 });
 

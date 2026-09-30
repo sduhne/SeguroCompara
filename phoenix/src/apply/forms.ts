@@ -65,10 +65,36 @@ export function classifyField(label: string, meta: FieldMeta = {}): FieldIntent 
   return 'unknown';
 }
 
+export type HiringRegion = 'eu' | 'us' | 'other';
+
 export interface ValueContext {
   contact: Contact;
   profile: Profile;
   packet?: Packet;
+  /** Where the employer hires from, when known; steers right-to-work answers. */
+  region?: HiringRegion;
+}
+
+const EU_RE = /\b(eu|e\.u\.|european union|europe|european|eea|germany|german|deutschland|spain|netherlands|ireland|france|italy|austria|belgium|portugal|sweden|denmark|finland|poland|czech|greece|luxembourg|estonia|latvia|lithuania|hungary|romania|bulgaria|croatia|slovakia|slovenia|malta|cyprus|norway|iceland|liechtenstein|switzerland|schengen)\b/i;
+const NO_RIGHT_RE = /\b(united states|u\.s\.a?|usa|america|canada|canadian|uk|u\.k\.|united kingdom|britain|british|australia|new zealand|singapore|japan)\b/i;
+const US_CAPS_RE = /\bUS\b/;
+const MX_RE = /\bm[e\u00e9]xico\b|\bmexican\b/i;
+
+/** Rough guess of the hiring region from a location line or posting text. */
+export function detectRegion(text: string | undefined): HiringRegion {
+  if (!text) return 'other';
+  if (NO_RIGHT_RE.test(text) || US_CAPS_RE.test(text)) return 'us';
+  if (EU_RE.test(text)) return 'eu';
+  return 'other';
+}
+
+/** Whether the candidate may work in the country a question names: EU/EEA and Mexico yes, US/UK/Canada no. */
+export function rightToWork(label: string, ctx: ValueContext): 'Yes' | 'No' {
+  if (MX_RE.test(label) || EU_RE.test(label)) return 'Yes';
+  if (NO_RIGHT_RE.test(label) || US_CAPS_RE.test(label)) return 'No';
+  if (ctx.region === 'eu') return 'Yes';
+  if (ctx.region === 'us') return 'No';
+  return (ctx.profile.apply.answers.work_authorization_yes_no ?? 'No') === 'Yes' ? 'Yes' : 'No';
 }
 
 /** Text to type for a known field, or undefined when the field should be left alone. */
@@ -133,12 +159,13 @@ export function pickOption(intent: FieldIntent, options: string[], ctx: ValueCon
     case 'how_heard':
       return findOption(clean, /job board|other|online|linkedin|internet|website/i) ?? clean[clean.length - 1];
     case 'authorization': {
-      const yes = /mexico|méxico/i.test(label) ? 'Yes' : (a.work_authorization_yes_no ?? 'No');
+      const yes = rightToWork(label, ctx);
       return findOption(clean, yes === 'Yes' ? /^yes\b/i : /^no\b/i);
     }
     case 'sponsorship': {
-      const yes = a.require_sponsorship_yes_no ?? 'Yes';
-      return findOption(clean, yes === 'Yes' ? /^yes\b/i : /^no\b/i);
+      const named = MX_RE.test(label) || EU_RE.test(label) || NO_RIGHT_RE.test(label) || US_CAPS_RE.test(label) || ctx.region !== undefined;
+      const needs = named ? (rightToWork(label, ctx) === 'Yes' ? 'No' : 'Yes') : (a.require_sponsorship_yes_no ?? 'Yes');
+      return findOption(clean, needs === 'Yes' ? /^yes\b/i : /^no\b/i);
     }
     case 'remote_ok':
       return findOption(clean, /^yes\b|remote/i);

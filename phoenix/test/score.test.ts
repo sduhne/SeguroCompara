@@ -69,6 +69,10 @@ describe('scoreJob', () => {
     expect(de.breakdown.language).toBe(-15);
   });
 
+  it('treats EU-only postings as good regions now that the candidate holds an EU passport', () => {
+    expect(scoreJob(job({ title: 'Fractional CFO', location: 'Remote - EU only' }), search, now).breakdown.region).toBe(8);
+  });
+
   it('penalises pay stated only in a weak currency', () => {
     const r = scoreJob(job({ title: 'Portfolio Manager', salary: { min: 40000, currency: 'MXN', period: 'month' } }), search, now);
     expect(r.breakdown.currency).toBe(-10);

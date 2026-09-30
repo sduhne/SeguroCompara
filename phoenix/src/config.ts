@@ -42,6 +42,7 @@ export const ProfileSchema = z.object({
     country: z.string(),
     timezone: z.string(),
     languages: z.array(z.string()).default([]),
+    citizenship: z.string().optional(),
     summary: z.string(),
     experience: z.array(Experience).default([]),
     education: z.array(z.string()).default([]),
@@ -50,9 +51,12 @@ export const ProfileSchema = z.object({
     availability: z.string(),
     engagement_types: z.array(z.string()).default([]),
     compensation: z.object({
-      full_time_usd_year_min: z.number(),
-      part_time_usd_hour_min: z.number(),
-      consulting_usd_day_min: z.number(),
+      /** What applications quote for full-time work. */
+      target_usd_month: z.number(),
+      /** Private reservation price: used for filtering, never quoted. */
+      floor_usd_month: z.number(),
+      part_time_usd_hour: z.number(),
+      consulting_usd_day: z.number(),
     }),
   }),
   search: SearchSchema,

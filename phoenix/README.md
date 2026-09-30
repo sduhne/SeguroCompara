@@ -15,11 +15,11 @@ npx tsx src/cli.ts init                # creates private/contact.yaml from the e
 
 Then:
 
-1. Fill in `private/contact.yaml` (email, phone, LinkedIn URL) and put the CV in `private/`, matching `cv_path`. That folder is git-ignored; this repository is public.
+1. `private/contact.yaml` holds the contact details and `cv_path` points at the CV in `private/`. While this package lives in a public repository that folder is git-ignored; once it lives in a private repository, remove the `private/*` and `data/*` lines from `.gitignore` so contact details, CV and state persist between sessions.
 2. Review `profile.yaml`. Every line marked `SET ME` is a placeholder: salary expectations, the standard yes/no answers about work authorization and sponsorship, the Menlo Capital dates.
-3. Export `ANTHROPIC_API_KEY` for the Claude steps (score `--llm`, tailor, and unknown form questions during apply).
+3. Optional: export `ANTHROPIC_API_KEY` for the Claude steps at scale (score `--llm`, tailor, unknown form questions during apply). Without a key, run `tailor --export bundle.json`, have a Claude Code session write the packets from that bundle, then `tailor --import packets.json`.
 
-Node 22 or later. No database: the state lives in `data/` as JSON (git-ignored).
+Node 22 or later. No database: the state lives in `data/` as JSON. In a private repository, commit it so every session continues where the last one stopped; keep `data/screenshots/` and `data/outbox/` out of git.
 
 ## Daily loop
 
@@ -53,7 +53,7 @@ Other commands: `show <id>`, `status <id> <status> [note]` (interview, offer, re
 
 ## Honesty settings
 
-Two answers matter legally. `work_authorization_yes_no` is the answer to "Are you authorized to work in <the company's country>?" and defaults to `No` (it answers `Yes` when the question names Mexico). `require_sponsorship_yes_no` defaults to `Yes`. For contractor roles these questions often do not apply, and the free-text `work_authorization` answer explains the contractor/EOR setup. Change the defaults only if they are true for you.
+Right-to-work questions are answered per country. The candidate holds Mexican and German citizenship, so the answer is Yes for Mexico and any EU/EEA state and No for the US, UK, Canada and Australia. When the question names no country, the employer's region read from the posting decides, and only then the defaults in `apply.answers`. Sponsorship questions are the inverse. The free-text `work_authorization` answer explains the contractor and employer-of-record setup for US companies. Change the defaults only if they are true for you.
 
 ## Running inside a Claude Code cloud session
 

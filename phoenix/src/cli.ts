@@ -8,7 +8,7 @@ import { discover, enabledSources } from './discover.js';
 import { buildReport } from './report.js';
 import { rank } from './score.js';
 import { Store } from './store.js';
-import { rate, tailor, tailorBatchCollect, tailorBatchSubmit } from './tailor.js';
+import { exportForTailoring, importPackets, rate, tailor, tailorBatchCollect, tailorBatchSubmit } from './tailor.js';
 import type { Job, JobStatus } from './types.js';
 
 const program = new Command();
@@ -122,8 +122,20 @@ program
   .option('--force', 'rewrite existing packets')
   .option('--batch', 'submit as a Message Batch (half price, results within hours)')
   .option('--collect <batchId>', 'fetch the results of a submitted batch')
-  .action(async (opts: { top: string; ids?: string; force?: boolean; batch?: boolean; collect?: string }) => {
+  .option('--export <path>', 'write a bundle to tailor without an API key (in a Claude Code session)')
+  .option('--import <path>', 'load packets written from an exported bundle')
+  .action(async (opts: { top: string; ids?: string; force?: boolean; batch?: boolean; collect?: string; export?: string; import?: string }) => {
     const { config, store } = open();
+    if (opts.export) {
+      const r = exportForTailoring(config, store, { top: Number(opts.top), ids: csv(opts.ids), force: opts.force }, opts.export);
+      return log(`exported ${r.count} jobs to ${r.path}`);
+    }
+    if (opts.import) {
+      const r = importPackets(store, opts.import);
+      log(`imported ${r.done.length} packets; ${r.failed.length} failed`);
+      for (const f of r.failed) log(`  ${f.id}: ${f.error}`);
+      return;
+    }
     if (opts.collect) {
       const r = await tailorBatchCollect(config, store, opts.collect);
       if (r.status === 'pending') return log('batch still processing; try again later');

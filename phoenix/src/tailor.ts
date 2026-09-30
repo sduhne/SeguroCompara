@@ -1,7 +1,8 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Config } from './config.js';
-import { collectTailorBatch, createClient, rateJob, submitTailorBatch, tailorJob } from './llm.js';
+import { z } from 'zod';
+import { collectTailorBatch, createClient, PacketSchema, packetFromValue, rateJob, STANDARD_QUESTIONS, submitTailorBatch, systemPrompt, tailorJob, tailorPrompt } from './llm.js';
 import { rank } from './score.js';
 import type { Store } from './store.js';
 import type { Job } from './types.js';
@@ -78,6 +79,53 @@ function markTailored(store: Store, jobId: string): void {
     job.status = 'tailored';
     store.saveJobs(jobs);
   }
+}
+
+/**
+ * Bundle for tailoring without an API key: a Claude Code session (or you) reads this file, writes
+ * one packet per job in the documented shape, and `importPackets` loads them.
+ */
+export function exportForTailoring(config: Config, store: Store, opts: SelectOptions, outPath: string): { count: number; path: string } {
+  const targets = selectForTailoring(store, { ...opts, top: opts.top ?? 15 });
+  const bundle = {
+    instructions: [
+      'For each job below, write one packet object and collect them in a JSON array.',
+      'Packet shape: {"jobId": string, "subject": string, "cover_letter": string, "why_me": string[3-5], "answers": [{"question": string, "answer": string}], "language": "en"|"es"}.',
+      'Follow the writer rules and use only facts from the dossier. Then run: phoenix tailor --import <file>.',
+    ],
+    writer_rules_and_dossier: systemPrompt(config.profile, config.contact),
+    questions: STANDARD_QUESTIONS,
+    jobs: targets.map((job) => ({ jobId: job.id, prompt: tailorPrompt(job, STANDARD_QUESTIONS) })),
+  };
+  writeFileSync(outPath, JSON.stringify(bundle, null, 2) + '\n');
+  return { count: targets.length, path: outPath };
+}
+
+const ImportedPacket = PacketSchema.extend({ jobId: z.string() });
+
+export function importPackets(store: Store, file: string): { done: string[]; failed: Array<{ id: string; error: string }> } {
+  const raw = JSON.parse(readFileSync(file, 'utf8')) as unknown;
+  const items = Array.isArray(raw) ? raw : (raw as { packets?: unknown[] })?.packets ?? [];
+  const jobs = store.loadJobs();
+  const done: string[] = [];
+  const failed: Array<{ id: string; error: string }> = [];
+  for (const item of items) {
+    const parsed = ImportedPacket.safeParse(item);
+    const id = (item as { jobId?: string })?.jobId ?? '?';
+    if (!parsed.success) {
+      failed.push({ id, error: z.prettifyError(parsed.error).split('\n')[0] });
+      continue;
+    }
+    const job = jobs.find((j) => j.id === parsed.data.jobId);
+    if (!job) {
+      failed.push({ id, error: 'unknown job id' });
+      continue;
+    }
+    store.savePacket(packetFromValue(job, parsed.data, 'session'));
+    markTailored(store, job.id);
+    done.push(job.id);
+  }
+  return { done, failed };
 }
 
 interface BatchRecord {

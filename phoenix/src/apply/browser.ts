@@ -4,7 +4,7 @@ import { chromium, type Locator, type Page } from 'playwright';
 import type { Contact, Profile } from '../config.js';
 import type { Store } from '../store.js';
 import type { Job, Packet } from '../types.js';
-import { bankAnswer, classifyField, pickOption, valueFor, type FieldIntent, type ValueContext } from './forms.js';
+import { bankAnswer, classifyField, detectRegion, pickOption, valueFor, type FieldIntent, type ValueContext } from './forms.js';
 
 export interface BrowserApplyOptions {
   confirm: boolean;
@@ -126,7 +126,7 @@ export async function applyWithBrowser(args: {
   const { job, packet, contact, profile, cvPath, store, options } = args;
   const log = options.log ?? (() => {});
   const timeoutMs = options.timeoutMs ?? 45_000;
-  const ctx: ValueContext = { contact, profile, packet };
+  const ctx: ValueContext = { contact, profile, packet, region: detectRegion(`${job.location ?? ''} ${job.description.slice(0, 1500)}`) };
   const filled: string[] = [];
   const unanswered: string[] = [];
   const browser = await chromium.launch({ headless: !options.headed, executablePath: process.env.PHOENIX_CHROMIUM_PATH || undefined });

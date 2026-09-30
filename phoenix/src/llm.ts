@@ -20,6 +20,7 @@ export function buildDossier(profile: Profile, contact?: Contact): string {
     `Headline: ${c.headline}`,
     `Location: ${c.location} (${c.timezone})`,
     `Languages: ${c.languages.join('; ')}`,
+    c.citizenship ? `Citizenship: ${c.citizenship}` : '',
     contact?.linkedin ? `LinkedIn: ${contact.linkedin}` : '',
     '',
     'Summary:',
@@ -36,14 +37,15 @@ export function buildDossier(profile: Profile, contact?: Contact): string {
   lines.push('', `Work authorization: ${c.work_authorization}`);
   lines.push(`Availability: ${c.availability}`);
   lines.push(`Engagement types: ${c.engagement_types.join(', ')}`);
+  const comp = c.compensation;
   lines.push(
-    `Compensation floor: USD ${c.compensation.full_time_usd_year_min}/year full-time, USD ${c.compensation.part_time_usd_hour_min}/hour part-time, USD ${c.compensation.consulting_usd_day_min}/day consulting`,
+    `Compensation to quote when asked: USD ${comp.target_usd_month.toLocaleString('en-US')} per month (USD ${(comp.target_usd_month * 12).toLocaleString('en-US')} a year) for full-time work, USD ${comp.part_time_usd_hour} per hour for part-time or advisory work, USD ${comp.consulting_usd_day} per day for consulting; always add that the candidate is flexible for the right scope. Never quote a lower figure.`,
   );
   if (profile.qa_bank.length) {
     lines.push('', 'Standard answers the candidate has approved:');
     for (const qa of profile.qa_bank) lines.push(`Q: ${qa.q}\nA: ${qa.a}`);
   }
-  return lines.filter((l) => l !== undefined).join('\n');
+  return lines.filter((l) => l !== undefined && l !== '').join('\n');
 }
 
 const WRITER_RULES = `You write job applications for one candidate, in the candidate's own voice: direct, specific, plain. No clichés ("passionate", "dynamic", "leverage", "synergy"), no exclamation marks, no flattery of the company. Never invent employers, dates, numbers, credentials, tools or results; every fact must come from the dossier. If the posting asks for something the candidate lacks, name the closest true thing instead of claiming it. Write in the language of the posting (English or Spanish). Match the posting's spelling (US or UK).`;
